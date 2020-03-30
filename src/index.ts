@@ -1,13 +1,10 @@
 import App from './app'
+import FileController from './controllers/file.controller';
 
 const app = new App(
     [
-        // file controllers
+        new FileController()
     ]
 );
 
-async function start() {
-   (await app.connectGrpc(5000)).listen();
-}
-
-start();
+app.listen();

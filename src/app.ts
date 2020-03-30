@@ -1,13 +1,13 @@
 import * as config from './config'
 import express from 'express';
 import bodyParser from 'body-parser';
-import e from 'express';
+import Controller from './controllers/controller';
 
 export default class App {
 
     public app: express.Application;
 
-    constructor(controllers: Array<any>) {
+    constructor(controllers: Array<Controller>) {
         this.app = express();
         this.initMiddlewares()
         this.initControllers(controllers);
@@ -28,7 +28,7 @@ export default class App {
         });
     }
 
-    private initControllers(controllers: Array<any>) {
+    private initControllers(controllers: Array<Controller>) {
         controllers.forEach(controller => {
             this.app.use(controller.path, controller.router)
         });
