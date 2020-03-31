@@ -27,6 +27,4 @@ export default abstract class Controller {
 
     public abstract all(req: express.Request, res: express.Response): any;
 
-
-
 }
