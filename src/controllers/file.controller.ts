@@ -10,16 +10,15 @@ import FileControllerProto from "./file.controller.proto";
 export default class FileController extends Controller {
     
     public path: string = "/file";
-    private proto: FileControllerProto
     
     constructor() {
         super();
-        this.proto = new FileControllerProto();
     }
 
     public create(req: express.Request, res: express.Response) {
         const file: any = req.body.file;
-        this.proto.create(file)
+        const proto: FileControllerProto = new FileControllerProto();
+        proto.create(file)
         .then((file) => {
             res.send(file)
         })

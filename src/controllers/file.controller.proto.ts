@@ -22,15 +22,22 @@ export default class FileControllerProto {
             file.setName(data.name)
             file.setIsfolder(data.isFolder)
 
-            console.log(file)
-
             createReq.setFile(file)
 
-            this.client.create(createReq, (err, file: FileRes) => {
+            this.client.create(createReq, (err, file: any) => {
                 if (err != null) {
+                    console.log("reject", err)
                     reject(err); return;
                 }
-                resolve(file.getFile());
+                resolve({
+                    "file": {
+                        "id": file.getFile().array[0],
+                        "owner": file.getFile().array[1],
+                        "path": file.getFile().array[2],
+                        "name": file.getFile().array[3],
+                        "isFolder": file.getFile().array[4]
+                    }
+                });
             });
         });
     }
@@ -41,11 +48,19 @@ export default class FileControllerProto {
             readReq.setId(id)
             readReq.setOwner(owner)
 
-            this.client.read(readReq, (err, file: FileRes) => {
+            this.client.read(readReq, (err, file: any) => {
                 if (err != null) {
                     reject(err); return;
                 }
-                resolve(file.getFile());
+                resolve({
+                    "file": {
+                        "id": file.getFile().array[0],
+                        "owner": file.getFile().array[1],
+                        "path": file.getFile().array[2],
+                        "name": file.getFile().array[3],
+                        "isFolder": file.getFile().array[4]
+                    }
+                });
             });
         });
     }
@@ -56,11 +71,13 @@ export default class FileControllerProto {
             deleteReq.setId(id)
             deleteReq.setOwner(owner)
 
-            this.client.delete(deleteReq, (err, success: DeleteRes) => {
+            this.client.delete(deleteReq, (err, success: any) => {
                 if (err != null) {
                     reject(err); return;
                 }
-                resolve(success);
+                resolve({
+                    "success": success.array[0]
+                });
             });
         });
     }

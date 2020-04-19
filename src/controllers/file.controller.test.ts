@@ -1,12 +1,54 @@
 import FileControllerProto from './file.controller.proto'
 import { expect } from 'chai';
-// if you used the '@types/mocha' method to install mocha type definitions, uncomment the following line
-// import 'mocha';
+import e from 'express';
+
+let id: string = "";
+let owner: string = "";
 
 describe('Create function', () => {
-  it('should return new file', () => {
+  it('should return new file', async () => {
     let proto: FileControllerProto = new FileControllerProto();
-    const result = proto.create({});
-    expect(result).to.equal('Hello - World!');
+    const result: any = await proto.create({
+      "id": "",
+      "owner": "1",
+      "path": "bin/t",
+      "name": "Hello",
+      "isFolder": true
+    })
+
+    if (result.file) {
+      id = result.file.id;
+      owner = result.file.owner;
+    }
+    expect(result.file.id).not.equal(undefined);
+  });
+});
+
+describe('Read function', () => {
+  it('should return file', async () => {
+    let proto: FileControllerProto = new FileControllerProto();
+    const result: any = await proto.read(id, owner)
+    expect(result.file.id).not.equal(undefined);
+  });
+});
+
+describe('Read function', () => {
+  it('should return permittion denied', async () => {
+    let proto: FileControllerProto = new FileControllerProto();
+    try {
+      const result: any = await proto.read(id, "owner")
+    } catch (e) {
+      let err: Error = e;
+      console.log(e.message)
+      expect(true).to.equal(true);
+    }
+  });
+});
+
+describe('Delete function', () => {
+  it('should delete file and return true', async () => {
+    let proto: FileControllerProto = new FileControllerProto();
+    const result: any = await proto.delete(id, owner)
+    expect(result.success).to.equal(true);
   });
 });
