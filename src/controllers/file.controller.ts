@@ -23,7 +23,7 @@ export default class FileController extends Controller {
             res.send(file)
         })
         .catch((err) => {
-            res.status(400).send(err)
+            res.status(res.statusCode).send(err)
         })
     }
     
@@ -37,12 +37,20 @@ export default class FileController extends Controller {
             res.send(file)
         })
         .catch((err) => {
-            res.status(400).send(err)
+            res.status(res.statusCode).send(err)
         })
     }
 
     public update(req: express.Request, res: express.Response) {
-        throw new Error("Method not implemented.");
+        const file: any = req.body.file;
+        const proto: FileControllerProto = new FileControllerProto();
+        proto.update(file)
+        .then((file) => {
+            res.send(file)
+        })
+        .catch((err) => {
+            res.status(res.statusCode).send(err)
+        })
     }
 
     public delete(req: express.Request, res: express.Response) {
@@ -54,7 +62,7 @@ export default class FileController extends Controller {
             res.send(success)
         })
         .catch((err) => {
-            res.status(400).send(err)
+            res.status(res.statusCode).send(err)
         })
     }
     public all(req: express.Request, res: express.Response) {
