@@ -1,15 +1,11 @@
 import Controller from "./controller";
 import express from 'express'
-
-import * as config from './../config'
-import * as grpc from "grpc";
-import { FileServiceClient } from "./../../proto/generated/files_grpc_pb";
-import { File, ReadReq} from "./../../proto/generated/files_pb";
 import FileControllerProto from "./file.controller.proto";
 
 export default class FileController extends Controller {
     
     public path: string = "/file";
+    private proto: FileControllerProto = new FileControllerProto();
     
     constructor() {
         super();
@@ -17,13 +13,13 @@ export default class FileController extends Controller {
 
     public create(req: express.Request, res: express.Response) {
         const file: any = req.body.file;
-        const proto: FileControllerProto = new FileControllerProto();
-        proto.create(file)
+        
+        this.proto.create(file)
         .then((file) => {
             res.send(file)
         })
         .catch((err) => {
-            res.status(res.statusCode).send(err)
+            res.status(this.statusCodes.getHttpStatusCode(res.statusCode)).send(err)
         })
     }
     
@@ -31,38 +27,37 @@ export default class FileController extends Controller {
         const id: string = req.params.id;
         const owner: string = req.body.owner;
 
-        const proto: FileControllerProto = new FileControllerProto();
-        proto.read(id, owner)
+        this.proto.read(id, owner)
         .then((file) => {
             res.send(file)
         })
         .catch((err) => {
-            res.status(res.statusCode).send(err)
+            res.status(this.statusCodes.getHttpStatusCode(res.statusCode)).send(err)
         })
     }
 
     public update(req: express.Request, res: express.Response) {
         const file: any = req.body.file;
-        const proto: FileControllerProto = new FileControllerProto();
-        proto.update(file)
+
+        this.proto.update(file)
         .then((file) => {
             res.send(file)
         })
         .catch((err) => {
-            res.status(res.statusCode).send(err)
+            res.status(this.statusCodes.getHttpStatusCode(res.statusCode)).send(err)
         })
     }
 
     public delete(req: express.Request, res: express.Response) {
         const id: string = req.params.id;
         const owner: string = req.body.owner;
-        const proto: FileControllerProto = new FileControllerProto();
-        proto.delete(id, owner)
+        
+        this.proto.delete(id, owner)
         .then((success) => {
             res.send(success)
         })
         .catch((err) => {
-            res.status(res.statusCode).send(err)
+            res.status(this.statusCodes.getHttpStatusCode(res.statusCode)).send(err)
         })
     }
     public all(req: express.Request, res: express.Response) {

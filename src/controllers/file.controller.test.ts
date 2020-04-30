@@ -1,6 +1,5 @@
 import FileControllerProto from './file.controller.proto'
 import { expect } from 'chai';
-import e from 'express';
 
 let id: string = "";
 let owner: string = "";

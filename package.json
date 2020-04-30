@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha -r ts-node/register src/**/*.test.ts",
     "build": "npx tsc",
-    "develop": "npx nodemon ./src/index.ts"
+    "develop": "npx nodemon ./src/index.ts",
+    "start": "npm run build && node ./dist/index"
   },
   "keywords": [],
   "author": "",

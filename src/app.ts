@@ -34,12 +34,6 @@ export default class App {
         });
     }
 
-    public async connectGrpc(m: number): Promise<App> {
-        await new Promise(func => setTimeout(func, m));
-        console.log(`Grpc listening on the port ${config.server_port}`);
-        return this;
-    }
-
     public async listen() {
         this.app.listen(config.using_port, () => {
             console.log(`App listening on the port ${config.using_port}`);

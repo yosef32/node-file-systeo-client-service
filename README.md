@@ -1,2 +1,2 @@
 # node-file-systeo-client-service
-## node-file-systeo-client-servic
+## node-file-systeo-client-service
