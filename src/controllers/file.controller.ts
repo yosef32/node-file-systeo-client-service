@@ -1,6 +1,7 @@
 import Controller from "./controller";
 import express from 'express'
 import FileControllerProto from "./file.controller.proto";
+import ModelFile from "../model/model.file";
 
 export default class FileController extends Controller {
     
@@ -12,7 +13,7 @@ export default class FileController extends Controller {
     }
 
     public create(req: express.Request, res: express.Response) {
-        const file: any = req.body.file;
+        const file: ModelFile = req.body.file;
         
         this.proto.create(file)
         .then((file) => {

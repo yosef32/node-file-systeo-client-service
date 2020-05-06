@@ -1,5 +1,6 @@
 import FileControllerProto from './file.controller.proto'
 import { expect } from 'chai';
+import ModelFile from '../model/model.file';
 
 let id: string = "";
 let owner: string = "";
@@ -7,7 +8,7 @@ let owner: string = "";
 describe('Create function', () => {
   it('should return new file', async () => {
     let proto: FileControllerProto = new FileControllerProto();
-    const result: any = await proto.create({
+    const result: ModelFile = await proto.create({
       "id": "",
       "owner": "1",
       "path": "bin/t",
@@ -15,11 +16,11 @@ describe('Create function', () => {
       "isFolder": true
     })
 
-    if (result.file) {
-      id = result.file.id;
-      owner = result.file.owner;
+    if (result) {
+      id = result.id;
+      owner = result.owner;
     }
-    expect(result.file.id).not.equal(undefined);
+    expect(result.id).not.equal(undefined);
   });
 });
 
